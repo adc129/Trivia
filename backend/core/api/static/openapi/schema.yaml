@@ -1,0 +1,1550 @@
+openapi: 3.0.2
+info:
+  title: 'Klingon API'
+  version: 1.0.0
+  description: An API used to run a Trivia game
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: jwa58@txstate.edu
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+  - name: trivia
+    description: Access to Trivia game sessions
+  - name: questions
+    description: Obtain questions for a Trivia game
+  - name: profile
+    description: Everything about a users Profile
+  - name: user
+    description: Manage user auth values
+  - name: chat
+    description: Manages messaging sessions
+    externalDocs:
+      description: Djoser docs
+      url: 'https://djoser.readthedocs.io/en/latest/base_endpoints.html'
+components:
+  securitySchemes:
+    ApiKeyAuth:        # arbitrary name for the security scheme
+      type: apiKey
+      in: header       # can be "header", "query" or "cookie"
+      name: Authorization token  # name of the header, query parameter or cookie
+paths:
+  /api/v1/question/:
+    get:
+      tags:
+      - questions
+      operationId: listQuestions
+      description: ''
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: type
+        required: false
+        in: query
+        description: type
+        schema:
+          type: string
+      - name: category
+        required: false
+        in: query
+        description: category
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        content:
+                          type: string
+                          maxLength: 200
+                        correct:
+                          type: string
+                          maxLength: 200
+                        incorrect:
+                          type: string
+                          maxLength: 200
+                        category:
+                          enum:
+                          - '1'
+                          - '2'
+                          - '3'
+                          - '4'
+                        type:
+                          enum:
+                          - '1'
+                          - '2'
+          description: ''
+    post:
+      tags:
+      - questions
+      operationId: createQuestion
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id007
+              properties:
+                content:
+                  type: string
+                  maxLength: 200
+                correct:
+                  type: string
+                  maxLength: 200
+                incorrect:
+                  type: string
+                  maxLength: 200
+                category:
+                  enum:
+                  - '1'
+                  - '2'
+                  - '3'
+                  - '4'
+                type:
+                  enum:
+                  - '1'
+                  - '2'
+          application/x-www-form-urlencoded:
+            schema: *id007
+          multipart/form-data:
+            schema: *id007
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  content:
+                    type: string
+                    maxLength: 200
+                  correct:
+                    type: string
+                    maxLength: 200
+                  incorrect:
+                    type: string
+                    maxLength: 200
+                  category:
+                    enum:
+                    - '1'
+                    - '2'
+                    - '3'
+                    - '4'
+                  type:
+                    enum:
+                    - '1'
+                    - '2'
+          description: ''
+  /api/v1/question/{id}/:
+    get:
+      tags:
+      - questions
+      operationId: retrieveQuestion
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this question.
+        schema:
+          type: string
+      - name: type
+        required: false
+        in: query
+        description: type
+        schema:
+          type: string
+      - name: category
+        required: false
+        in: query
+        description: category
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  content:
+                    type: string
+                    maxLength: 200
+                  correct:
+                    type: string
+                    maxLength: 200
+                  incorrect:
+                    type: string
+                    maxLength: 200
+                  category:
+                    enum:
+                    - '1'
+                    - '2'
+                    - '3'
+                    - '4'
+                  type:
+                    enum:
+                    - '1'
+                    - '2'
+          description: ''
+    put:
+      tags:
+      - questions
+      operationId: updateQuestion
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this question.
+        schema:
+          type: string
+      - name: type
+        required: false
+        in: query
+        description: type
+        schema:
+          type: string
+      - name: category
+        required: false
+        in: query
+        description: category
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id008
+              properties:
+                content:
+                  type: string
+                  maxLength: 200
+                correct:
+                  type: string
+                  maxLength: 200
+                incorrect:
+                  type: string
+                  maxLength: 200
+                category:
+                  enum:
+                  - '1'
+                  - '2'
+                  - '3'
+                  - '4'
+                type:
+                  enum:
+                  - '1'
+                  - '2'
+          application/x-www-form-urlencoded:
+            schema: *id008
+          multipart/form-data:
+            schema: *id008
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  content:
+                    type: string
+                    maxLength: 200
+                  correct:
+                    type: string
+                    maxLength: 200
+                  incorrect:
+                    type: string
+                    maxLength: 200
+                  category:
+                    enum:
+                    - '1'
+                    - '2'
+                    - '3'
+                    - '4'
+                  type:
+                    enum:
+                    - '1'
+                    - '2'
+          description: ''
+    patch:
+      tags:
+      - questions
+      operationId: partial_updateQuestion
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this question.
+        schema:
+          type: string
+      - name: type
+        required: false
+        in: query
+        description: type
+        schema:
+          type: string
+      - name: category
+        required: false
+        in: query
+        description: category
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id009
+              properties:
+                content:
+                  type: string
+                  maxLength: 200
+                correct:
+                  type: string
+                  maxLength: 200
+                incorrect:
+                  type: string
+                  maxLength: 200
+                category:
+                  enum:
+                  - '1'
+                  - '2'
+                  - '3'
+                  - '4'
+                type:
+                  enum:
+                  - '1'
+                  - '2'
+          application/x-www-form-urlencoded:
+            schema: *id009
+          multipart/form-data:
+            schema: *id009
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  content:
+                    type: string
+                    maxLength: 200
+                  correct:
+                    type: string
+                    maxLength: 200
+                  incorrect:
+                    type: string
+                    maxLength: 200
+                  category:
+                    enum:
+                    - '1'
+                    - '2'
+                    - '3'
+                    - '4'
+                  type:
+                    enum:
+                    - '1'
+                    - '2'
+          description: ''
+    delete:
+      tags:
+      - questions
+      operationId: destroyQuestion
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this question.
+        schema:
+          type: string
+      - name: type
+        required: false
+        in: query
+        description: type
+        schema:
+          type: string
+      - name: category
+        required: false
+        in: query
+        description: category
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/v1/profile/{id}/:
+    get:
+      tags:
+      - profile
+      operationId: retrieveProfile
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this profile.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  user:
+                    type: integer
+                  bio:
+                    type: string
+                    maxLength: 500
+                  location:
+                    type: string
+                    maxLength: 30
+                  birth_date:
+                    type: string
+                    format: date
+                    nullable: true
+                  score:
+                    type: integer
+                  rank:
+                    type: integer
+                required:
+                - user
+          description: ''
+    put:
+      tags:
+      - profile
+      operationId: updateProfile
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this profile.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id002
+              properties:
+                user:
+                  type: integer
+                bio:
+                  type: string
+                  maxLength: 500
+                location:
+                  type: string
+                  maxLength: 30
+                birth_date:
+                  type: string
+                  format: date
+                  nullable: true
+                score:
+                  type: integer
+                rank:
+                  type: integer
+              required:
+              - user
+          application/x-www-form-urlencoded:
+            schema: *id002
+          multipart/form-data:
+            schema: *id002
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  user:
+                    type: integer
+                  bio:
+                    type: string
+                    maxLength: 500
+                  location:
+                    type: string
+                    maxLength: 30
+                  birth_date:
+                    type: string
+                    format: date
+                    nullable: true
+                  score:
+                    type: integer
+                  rank:
+                    type: integer
+                required:
+                - user
+          description: ''
+    patch:
+      tags:
+      - profile
+      operationId: partial_updateProfile
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this profile.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id003
+              properties:
+                user:
+                  type: integer
+                bio:
+                  type: string
+                  maxLength: 500
+                location:
+                  type: string
+                  maxLength: 30
+                birth_date:
+                  type: string
+                  format: date
+                  nullable: true
+                score:
+                  type: integer
+                rank:
+                  type: integer
+          application/x-www-form-urlencoded:
+            schema: *id003
+          multipart/form-data:
+            schema: *id003
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  user:
+                    type: integer
+                  bio:
+                    type: string
+                    maxLength: 500
+                  location:
+                    type: string
+                    maxLength: 30
+                  birth_date:
+                    type: string
+                    format: date
+                    nullable: true
+                  score:
+                    type: integer
+                  rank:
+                    type: integer
+                required:
+                - user
+          description: ''
+  /api/v1/trivia/:
+    post:
+      tags:
+      - trivia
+      operationId: createTrivia
+      description: 'This viewset automatically provides `list`, `create`, `retrieve`,
+
+        `update` and `destroy` actions.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id004
+              properties:
+                title:
+                  type: string
+                  maxLength: 200
+                type:
+                  enum:
+                  - '1'
+                  - '2'
+                category:
+                  enum:
+                  - '1'
+                  - '2'
+                  - '3'
+                  - '4'
+          application/x-www-form-urlencoded:
+            schema: *id004
+          multipart/form-data:
+            schema: *id004
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  title:
+                    type: string
+                    maxLength: 200
+                  type:
+                    enum:
+                    - '1'
+                    - '2'
+                  category:
+                    enum:
+                    - '1'
+                    - '2'
+                    - '3'
+                    - '4'
+          description: ''
+  /api/v1/trivia/{id}/:
+    get:
+      tags:
+        - trivia
+      operationId: retrieveTrivia
+      description: 'This viewset automatically provides `list`, `create`, `retrieve`,
+
+        `update` and `destroy` actions.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this trivia.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  title:
+                    type: string
+                    maxLength: 200
+                  type:
+                    enum:
+                    - '1'
+                    - '2'
+                  category:
+                    enum:
+                    - '1'
+                    - '2'
+                    - '3'
+                    - '4'
+          description: ''
+    put:
+      tags:
+      - trivia
+      operationId: updateTrivia
+      description: 'This viewset automatically provides `list`, `create`, `retrieve`,
+
+        `update` and `destroy` actions.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this trivia.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id005
+              properties:
+                title:
+                  type: string
+                  maxLength: 200
+                type:
+                  enum:
+                  - '1'
+                  - '2'
+                category:
+                  enum:
+                  - '1'
+                  - '2'
+                  - '3'
+                  - '4'
+          application/x-www-form-urlencoded:
+            schema: *id005
+          multipart/form-data:
+            schema: *id005
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  title:
+                    type: string
+                    maxLength: 200
+                  type:
+                    enum:
+                    - '1'
+                    - '2'
+                  category:
+                    enum:
+                    - '1'
+                    - '2'
+                    - '3'
+                    - '4'
+          description: ''
+    patch:
+      tags:
+      - trivia
+      operationId: partial_updateTrivia
+      description: 'This viewset automatically provides `list`, `create`, `retrieve`,
+
+        `update` and `destroy` actions.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this trivia.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id006
+              properties:
+                title:
+                  type: string
+                  maxLength: 200
+                type:
+                  enum:
+                  - '1'
+                  - '2'
+                category:
+                  enum:
+                  - '1'
+                  - '2'
+                  - '3'
+                  - '4'
+          application/x-www-form-urlencoded:
+            schema: *id006
+          multipart/form-data:
+            schema: *id006
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  title:
+                    type: string
+                    maxLength: 200
+                  type:
+                    enum:
+                    - '1'
+                    - '2'
+                  category:
+                    enum:
+                    - '1'
+                    - '2'
+                    - '3'
+                    - '4'
+          description: ''
+    delete:
+      tags:
+      - trivia
+      operationId: destroyTrivia
+      description: 'This viewset automatically provides `list`, `create`, `retrieve`,
+
+        `update` and `destroy` actions.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this trivia.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/auth/users/:
+    get:
+      tags:
+      - user
+      operationId: listUsers
+      description: ''
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        email:
+                          type: string
+                          format: email
+                          maxLength: 254
+                        id:
+                          type: integer
+                          readOnly: true
+                        username:
+                          type: string
+                          readOnly: true
+                          description: Required. 150 characters or fewer. Letters,
+                            digits and @/./+/-/_ only.
+          description: ''
+    post:
+      tags:
+      - user
+      operationId: createUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id010
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                username:
+                  type: string
+                  description: Required. 150 characters or fewer. Letters, digits
+                    and @/./+/-/_ only.
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+                password:
+                  type: string
+                  writeOnly: true
+              required:
+              - username
+              - password
+          application/x-www-form-urlencoded:
+            schema: *id010
+          multipart/form-data:
+            schema: *id010
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  username:
+                    type: string
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  id:
+                    type: integer
+                    readOnly: true
+                required:
+                - username
+          description: ''
+  /api/auth/users/me/:
+    get:
+      tags:
+      - user
+      operationId: meUser
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    readOnly: true
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+          description: ''
+    put:
+      tags:
+      - user
+      operationId: meUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id011
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+          application/x-www-form-urlencoded:
+            schema: *id011
+          multipart/form-data:
+            schema: *id011
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    readOnly: true
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+          description: ''
+    patch:
+      tags:
+      - user
+      operationId: meUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id012
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+          application/x-www-form-urlencoded:
+            schema: *id012
+          multipart/form-data:
+            schema: *id012
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    readOnly: true
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+          description: ''
+    delete:
+      tags:
+        - user
+      operationId: meUser
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  /api/auth/users/{id}/:
+    get:
+      tags:
+      - user
+      operationId: retrieveUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this user.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    readOnly: true
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+          description: ''
+    put:
+      tags:
+      - user
+      operationId: updateUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this user.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id013
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+          application/x-www-form-urlencoded:
+            schema: *id013
+          multipart/form-data:
+            schema: *id013
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    readOnly: true
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+          description: ''
+    patch:
+      tags:
+      - user
+      operationId: partial_updateUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this user.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id014
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+          application/x-www-form-urlencoded:
+            schema: *id014
+          multipart/form-data:
+            schema: *id014
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    readOnly: true
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+          description: ''
+    delete:
+      tags:
+        - user
+      operationId: destroyUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this user.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/auth/users/activation/:
+    post:
+      tags:
+      - user
+      operationId: activationUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id015
+              properties:
+                uid:
+                  type: string
+                token:
+                  type: string
+              required:
+              - uid
+              - token
+          application/x-www-form-urlencoded:
+            schema: *id015
+          multipart/form-data:
+            schema: *id015
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  uid:
+                    type: string
+                  token:
+                    type: string
+                required:
+                - uid
+                - token
+          description: ''
+  /api/auth/users/resend_activation/:
+    post:
+      tags:
+      - user
+      operationId: resend_activationUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id016
+              properties:
+                email:
+                  type: string
+                  format: email
+              required:
+              - email
+          application/x-www-form-urlencoded:
+            schema: *id016
+          multipart/form-data:
+            schema: *id016
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                required:
+                - email
+          description: ''
+  /api/auth/users/reset_password/:
+    post:
+      tags:
+      - user
+      operationId: reset_passwordUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id017
+              properties:
+                email:
+                  type: string
+                  format: email
+              required:
+              - email
+          application/x-www-form-urlencoded:
+            schema: *id017
+          multipart/form-data:
+            schema: *id017
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                required:
+                - email
+          description: ''
+  /api/auth/users/reset_password_confirm/:
+    post:
+      tags:
+      - user
+      operationId: reset_password_confirmUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id018
+              properties:
+                uid:
+                  type: string
+                token:
+                  type: string
+                new_password:
+                  type: string
+              required:
+              - uid
+              - token
+              - new_password
+          application/x-www-form-urlencoded:
+            schema: *id018
+          multipart/form-data:
+            schema: *id018
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  uid:
+                    type: string
+                  token:
+                    type: string
+                  new_password:
+                    type: string
+                required:
+                - uid
+                - token
+                - new_password
+          description: ''
+  /api/auth/users/reset_username/:
+    post:
+      tags:
+      - user
+      operationId: reset_usernameUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id019
+              properties:
+                email:
+                  type: string
+                  format: email
+              required:
+              - email
+          application/x-www-form-urlencoded:
+            schema: *id019
+          multipart/form-data:
+            schema: *id019
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                required:
+                - email
+          description: ''
+  /api/auth/users/reset_username_confirm/:
+    post:
+      tags:
+      - user
+      operationId: reset_username_confirmUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id020
+              properties:
+                new_username:
+                  type: string
+                  description: Required. 150 characters or fewer. Letters, digits
+                    and @/./+/-/_ only.
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+              required:
+              - new_username
+          application/x-www-form-urlencoded:
+            schema: *id020
+          multipart/form-data:
+            schema: *id020
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  new_username:
+                    type: string
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                required:
+                - new_username
+          description: ''
+  /api/auth/users/set_password/:
+    post:
+      tags:
+      - user
+      operationId: set_passwordUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id021
+              properties:
+                new_password:
+                  type: string
+                current_password:
+                  type: string
+              required:
+              - new_password
+              - current_password
+          application/x-www-form-urlencoded:
+            schema: *id021
+          multipart/form-data:
+            schema: *id021
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  new_password:
+                    type: string
+                  current_password:
+                    type: string
+                required:
+                - new_password
+                - current_password
+          description: ''
+  /api/auth/users/set_username/:
+    post:
+      tags:
+      - user
+      operationId: set_usernameUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id022
+              properties:
+                new_username:
+                  type: string
+                  description: Required. 150 characters or fewer. Letters, digits
+                    and @/./+/-/_ only.
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+              required:
+              - new_username
+          application/x-www-form-urlencoded:
+            schema: *id022
+          multipart/form-data:
+            schema: *id022
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  new_username:
+                    type: string
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                required:
+                - new_username
+          description: ''
+  /api/auth/token/login/:
+    post:
+      tags:
+      - user
+      operationId: CreateTokenCreate
+      description: Use this endpoint to obtain user authentication token.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id023
+              properties:
+                password:
+                  type: string
+                username:
+                  type: string
+          application/x-www-form-urlencoded:
+            schema: *id023
+          multipart/form-data:
+            schema: *id023
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  password:
+                    type: string
+                  username:
+                    type: string
+          description: ''
+  /api/auth/token/logout/:
+    post:
+      tags:
+      - user
+      operationId: CreateTokenDestroy
+      description: Use this endpoint to logout user (remove user authentication token).
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
