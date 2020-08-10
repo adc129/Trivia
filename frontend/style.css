@@ -1,11 +1,52 @@
 * {
-  background: #aaa;
+  box-sizing: border-box;
 }
 
-.content {
-   background: #98fb98;
+#navBar {
+  background-color: #88e;
+}
+
+.w3-content {
+   background: #004;
+}
+
+#content {
+   background: #d5f4e6;
+   margin-top: 3.1em;
+   border-radius: 40px;
+   border: dashed;
+   border-color: green;
+}
+
+.letterhead {
+  max-width:75%;
+  height: auto;
+  opacity: 1;
+  padding:5px;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  min-width: 100%;
+}
+
+.column {
+  flex: 20%;
+
 }
 
 footer {
-  background: #e37222;
+  background: black;
+}
+
+img {
+    opacity: 0.6;
+    max-width:70%;
+    height:auto;
+    object-fit: contain;
+}
+
+html, body {
+  min-width: 100%;
 }

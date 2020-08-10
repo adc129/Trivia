@@ -1,0 +1,121 @@
+.container-true{
+    background-color: #d5f4e6;
+    height:100%;
+}
+
+/* *{ border: 1px solid red; padding: 0; margin: 0; }*/
+
+
+.letterhead {
+    opacity: 100;
+    align: center;
+    width:60%;
+    height: auto;
+}
+.rootView {
+    background-color: orange;
+    flex-grow: 1;
+    height: 100%;
+}
+
+.row {
+    text-align: center;
+    justify-content: center;
+
+
+}
+
+.question{
+    background-color: #FFFAF0;
+    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    min-height: 225px;
+    align-items: center;
+    vertical-align: middle
+
+}
+
+.superButton{
+    color: #dcdcdc;
+    border: 1px solid white;
+    margin-left: 10px;
+
+    transition: 0.3s;
+}
+
+.progressVisualFull {
+     display: flex;
+     /* change the value if you want different thickness */
+     height: 6px;
+     margin: 20px 0;
+ }
+
+.progressVisualPart {
+    /* Number of the seconds for complete animation */
+    transition: width 2s;
+}
+
+
+footer {
+  background: black;
+}
+
+img {
+    margin-left: 9px;
+    margin-right: 9px;
+    margin-top: 6px;
+    height: 11%;
+    width: 11%;
+    opacity: 0.6;
+
+}
+
+html, body, #app, #app>div {
+    height: 100%;
+   }
+
+.buttons {
+    width: 100%;
+
+
+}
+.buttons tr {
+    display: flex;
+
+}
+.buttons tr td {
+    border-collapse: separate;
+    padding:  .5em;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.qButton-default{
+    box-shadow: 6px 6px 6px 4px rgba(0,93,3,.4);
+
+}
+.qButton-active{
+
+    box-shadow: 3px 3px 2px 2px rgba(0,93,3,.9);
+}
+.qButton-correct{
+
+    box-shadow: 1px 1px 8px 7px rgba(0, 178, 255, 0.99);
+}
+.qButton-incorrect{
+
+    box-shadow: 3px 3px 2px 2px rgba(0,0,0,.7);
+}
+.qButton-correct-unselected{
+    box-shadow: 3px 3px 2px 2px rgba(177, 118, 17, 0.84);
+}
+button {
+    flex: 1;
+}
+
+form{
+    padding: 10px;
+    margine: 10px;
+}
+
+

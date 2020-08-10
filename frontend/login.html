@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<!-- HOME -->
+<!-- LOGIN -->
 <html lang="en">
   <head>
-  <title>Trivia Knights</title>  
+  <title>Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-
     <!--Navbar-->
     <div id="navBar" class="w3-top">
       <div class="w3-bar w3-card row">
@@ -31,51 +29,27 @@
     </div>
 
     <!-- Page content -->
-    <div class="w3-content" style="max-width:2000px">
+    <div class="w3-content" style="max-width:2000px;margin-top:46px">
       <!--Main -->
-      <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px;" id="content">
-
-        <div class="row">
-          <div class="column">
-            <img src="imgs\2.png"style="width:100%">
-          </div>
-          <div class="column">
-            <img src="imgs\3.png"style="width:100%">
-          </div>
-          <div class="column">
-            <img src="imgs\4.png"style="width:100%">
-          </div>
-          <div class="column">
-            <img src="imgs\5.png"style="width:100%">
-          </div>
-          <div class="column">
-            <img src="imgs\6.png"style="width:100%">
-          </div>
-        </div>
-
-          <img src="imgs\LH4.png" class="letterhead">
-
-        <div class="row">
-          <div class="column">
-            <img src="imgs\1.png"style="width:100%">
-          </div>
-          <div class="column">
-            <img src="imgs\6.png"style="width:100%">
-          </div>
-          <div class="column">
-            <img src="imgs\3.png"style="width:100%">
-          </div>
-          <div class="column">
-            <img src="imgs\2.png"style="width:100%">
-          </div>
-          <div class="column">
-            <img src="imgs\4.png"style="width:100%">
-          </div>
-        </div>
-
-          <button id="clickCounter" class="w3-button w3-xlarge w3-theme w3-hover-teal">Click Me!: 0</button>
-          <button id="resetCounter" class="w3-button w3-xlarge w3-theme w3-hover-teal">Reset</button>
-        </div>
+      <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="content">
+          <h3>Login</h3>
+          <form>
+              <label for="user">UserID:</label><br>
+              <input type="text" id="user" name="user"><br>
+              <label for="pwd">Password:</label><br>
+              <input type="password" id="pwd" name="pwd"><br>
+              <input type="submit" value="Login" style="margin: 5px">
+          </form>
+          <h3>Or Register</h3>
+          <form>
+              <label for="user">UserID:</label><br>
+              <input type="text" id="user" name="user"><br>
+              <label for="email">Email Address:</label><br>
+              <input type="text" id="email" name="email"><br>
+              <label for="pwd">Password:</label><br>
+              <input type="password" id="pwd" name="pwd"><br>
+              <input type="submit" value="Register" style="margin: 5px">
+          </form>
       </div>
     </div>
 
