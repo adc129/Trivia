@@ -1,5 +1,5 @@
 # Trivia Application 
-Texas State University cs3398 Software Engineering course project.
+Texas State University CS3398 Software Engineering course project.
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/01ec3479-dd15-4611-80c6-4daa7503be4e/deploy-status)](https://app.netlify.com/sites/klingons-triviaknights/deploys)
 
